@@ -68,7 +68,36 @@ namespace ConCon.Models
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
+        [Required]
+        [Display(Name = "First Name")]
+        public string firstName { get; set; }
 
+        [Required]
+        [Display(Name = "Last Name")]
+        public string lastName { get; set; }
+
+        [Required]
+        [Display(GroupName = "Address", Name = "Address Line 1")]
+        public string addressLine1 { get; set; }
+
+        [Display(GroupName = "Address", Name = "Address Line 2")]
+        public string addressLine2 { get; set; }
+
+        [Required]
+        [Display(GroupName = "Address", Name = "City")]
+        public string city { get; set; }
+
+        [Required]
+        [Display(GroupName = "Address", Name = "State")]
+        public string state { get; set; }
+
+        [Required]
+        [Display(Name = "Role")]
+        public string UserRoles { get; set; }
+
+        [Required]
+        [Display(GroupName = "Address", Name = "Zipcode")]
+        public int zipcode { get; set; }
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]

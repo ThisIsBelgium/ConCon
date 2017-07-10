@@ -151,10 +151,30 @@ namespace ConCon.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser
+                {
+                    UserName = model.Email,
+                    Email = model.Email,
+                    firstName = model.firstName,
+                    lastName = model.lastName,
+                    addressLine1 = model.addressLine1,
+                    addressLine2 = model.addressLine2,
+                    city = model.city,
+                    state = model.state,
+                    zipCode = model.zipcode,
+                    role = model.UserRoles
+                };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    if (user.role == "Admin")
+                    {
+                        UserManager.AddToRole(user.Id, "Admin");
+                    }
+                    else
+                    {
+                        UserManager.AddToRole(user.Id, "User");
+                    }
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771

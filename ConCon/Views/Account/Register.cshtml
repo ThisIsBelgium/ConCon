@@ -17,6 +17,62 @@
             @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
         </div>
     </div>
+    //first name
+    <div class="form-group">
+        @Html.LabelFor(m => m.firstName, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.firstName, new { @class = "form-control" })
+        </div>
+    </div>
+    //last name
+    <div class="form-group">
+        @Html.LabelFor(m => m.lastName, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.lastName, new { @class = "form-control" })
+        </div>
+    </div>
+    //addressLine1
+    <div class="form-group">
+        @Html.LabelFor(m => m.addressLine1, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.addressLine1, new { @class = "form-control" })
+        </div>
+    </div>
+    //addressLine2
+    <div class="form-group">
+        @Html.LabelFor(m => m.addressLine2, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.addressLine2, new { @class = "form-control" })
+        </div>
+    </div>
+    //city
+    <div class="form-group">
+        @Html.LabelFor(m => m.city, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.city, new { @class = "form-control" })
+        </div>
+    </div>
+    //state
+    <div class="form-group">
+        @Html.LabelFor(m => m.state, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.state, new { @class = "form-control" })
+        </div>
+    </div>
+    //zipcode
+    <div class="form-group">
+        @Html.LabelFor(m => m.zipcode, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.zipcode, new { @class = "form-control" })
+        </div>
+    </div>
+    //Role
+    <div class="form-group">
+        @Html.LabelFor(m => m.UserRoles, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.DropDownList("UserRoles", new SelectList(new[] { "User", "Admin" }))
+        </div>
+    </div>
     <div class="form-group">
         @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
