@@ -143,7 +143,7 @@ namespace ConCon.Models
         public Stats2 stats { get; set; }
     }
 
-    public class RootObject
+    public class MapViewRootObject
     {
         public Meta meta { get; set; }
         public InHand in_hand { get; set; }

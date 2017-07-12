@@ -59,7 +59,7 @@ namespace ConCon.Controllers
                     if (response.IsSuccessStatusCode)
                     {
                         var jsonString = response.Content.ReadAsStringAsync();
-                        RootObject rootObject = JsonConvert.DeserializeObject<RootObject>(jsonString.Result);
+                        MapViewRootObject rootObject = JsonConvert.DeserializeObject<MapViewRootObject>(jsonString.Result);
                         foreach (Event select in rootObject.events)
                         {
                             events.Add(select);
