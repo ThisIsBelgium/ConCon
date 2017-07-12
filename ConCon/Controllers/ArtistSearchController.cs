@@ -36,7 +36,7 @@ namespace ConCon.Controllers
                 if (response.IsSuccessStatusCode)
                 {
                     var result = response.Content.ReadAsStringAsync();
-                    RootObject PerformerList = JsonConvert.DeserializeObject<RootObject>(result.Result);
+                    ArtistSearchRootObjectViewModel PerformerList = JsonConvert.DeserializeObject<ArtistSearchRootObjectViewModel>(result.Result);
                     foreach (PerformerViewModel perf in PerformerList.performers)
                     {
                         performer.name = perf.name;

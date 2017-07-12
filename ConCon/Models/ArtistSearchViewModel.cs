@@ -41,7 +41,7 @@ namespace ConCon.Models
         public object image_license { get; set; }
         public string url { get; set; }
     }
-    public class RootObject
+    public class ArtistSearchRootObjectViewModel
     {
         public List<PerformerViewModel> performers { get; set; }
     }
