@@ -30,7 +30,8 @@
 
         //User Location
         var marker = new google.maps.Marker({
-            position: myCenter
+            position: new google.maps.LatLng(43.057665, -87.881014),
+            map: map
         });
 
         //Event Location
@@ -42,87 +43,19 @@
             position: eventLoc           
         });
 
+        var infowindow = new google.maps.InfoWindow({
+            content:
+            eventInfo
+        });
+
         //User current location
         marker.setMap(map);
         google.maps.event.addListener(marker, 'click', function () {
-            var infowindow = new google.maps.InfoWindow({
-                content:
-                eventInfo
+                infowindow.setContent(eventLoc);
+                infowindow.open(map, marker);
             });
-            infowindow.open(map, marker);
-        });
-
-        //Event Locations
-        //eventLoc.setMap(map);
-        //google.maps.event.addListener(eventLoc, 'click', function () {
-        //    var eventInfoWindow = new google.maps.InfoWindow({
-        //        content:
-        //        "Event Address"
-        //    });
-        //    eventInfoWindow.open(map, eventLoc);
-        //});
-
-    }
-    
-   
-
-
-    //Set route on click
-
-    //function calculateAndDisplayRoute(directionsService, directionsDisplay) {
-    //    directionsService.route({
-    //        origin: document.getElementById('start').value,
-    //        destination: document.getElementById('end').value,
-    //        travelMode: 'DRIVING'
-    //    }, function (response, status) {
-    //        if (status === 'OK') {
-    //            directionsDisplay.setDirections(response);
-    //        } else {
-    //            window.alert('Directions request failed due to ' + status);
-    //        }
-    //    });
-    //}
-
-
-
-
-    //function calculateAndDisplayRoute(directionsService, directionsDisplay) {
-    //    var waypts = [];
-    //    var checkboxArray = document.getElementById('waypoints');
-    //    for (var i = 0; i < checkboxArray.length; i++) {
-    //        if (checkboxArray.options[i].selected) {
-    //            waypts.push({
-    //                location: checkboxArray[i].value,
-    //                stopover: true
-    //            });
-    //        }
-    //    }
-    //    directionsService.route({
-    //        origin: document.getElementById('start').value,
-    //        destination: document.getElementById('end').value,
-    //        waypoints: waypts,
-    //        optimizeWaypoints: true,
-    //        travelMode: 'DRIVING'
-    //    }, function (response, status) {
-    //        if (status === 'OK') {
-    //            directionsDisplay.setDirections(response);
-    //            var route = response.routes[0];
-    //            var summaryPanel = document.getElementById('directions-panel');
-    //            summaryPanel.innerHTML = '';
-    //            // For each route, display summary information.
-    //            for (var i = 0; i < route.legs.length; i++) {
-    //                var routeSegment = i + 1;
-    //                summaryPanel.innerHTML += '<b>Route Segment: ' + routeSegment +
-    //                    '</b><br>';
-    //                summaryPanel.innerHTML += route.legs[i].start_address + ' to ';
-    //                summaryPanel.innerHTML += route.legs[i].end_address + '<br>';
-    //                summaryPanel.innerHTML += route.legs[i].distance.text + '<br><br>';
-    //            }
-    //        } else {
-    //            window.alert('Directions request failed due to ' + status);
-    //        }
-    //    });
-    //}
+        
+    } 
 
 </script>
 <script async defer
