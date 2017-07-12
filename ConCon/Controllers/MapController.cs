@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Web;
+using Newtonsoft.Json;
 using System.Web.Mvc;
 
 namespace ConCon.Controllers
@@ -15,9 +16,9 @@ namespace ConCon.Controllers
         // GET: Map
         public ActionResult MapView(MapViewModel model)
         {
-            artistNames.Add("tool");
+            artistNames.Add("korn");
             List<string> artists = ArtistSplit(artistNames);
-            EventApiCall(model, artists);
+            model.events = EventApiCall(model, artists);
             return View(model);
         }
         private List<string> ArtistSplit(List<string> artistNames)
@@ -31,7 +32,7 @@ namespace ConCon.Controllers
                     string[] splitName = artist.Split();
                     foreach (string name in splitName)
                     {
-                        correctedName += name + "+";
+                        correctedName += name + "-";
                     }
                     string artistName = correctedName.Remove(correctedName.Length - 1);
                     correctedNames.Add(artistName);
@@ -43,23 +44,30 @@ namespace ConCon.Controllers
             }
             return correctedNames;
         }
-        private void EventApiCall(MapViewModel model, List<string> artists)
+        private List<Event> EventApiCall(MapViewModel model, List<string> artists)
         {
+            List<Event> events = new List<Event>();
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("http://api.songkick.com/api/");
+                client.BaseAddress = new Uri("https://api.seatgeek.com/2/");
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
                 foreach (string artist in artists)
                 {
-                    string url = "3.0/events.json?apikey={}&artist_name=" + artist;
-                    var response = client.GetAsync(url).Result;
+                    string url = "events?performers.slug=" + artist + "&client_id=ODExNjMyNnwxNDk5Nzg0NzQxLjEy";
+                    HttpResponseMessage response = client.GetAsync(url).Result;
                     if (response.IsSuccessStatusCode)
                     {
-                        model.events.Add(response);
-                    }
+                        var jsonString = response.Content.ReadAsStringAsync();
+                        RootObject rootObject = JsonConvert.DeserializeObject<RootObject>(jsonString.Result);
+                        foreach (Event select in rootObject.events)
+                        {
+                            events.Add(select);
+                        }
+                    }                    
                 }
             }
+            return events;
         }
     }
 }
