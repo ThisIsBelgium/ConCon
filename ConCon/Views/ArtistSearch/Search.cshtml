@@ -8,11 +8,34 @@
 <div class="form-group">
     @Html.LabelFor(m => m.Search, new { @class = "col-md-2 control-label" })
     <div class="col-md-10">
-        @Html.TextBoxFor(m => m.Search, new { @class = "form-control" })
+        @Html.TextBoxFor(m => m.Search, new { @class = "form-control", id = "searchInput" })
     </div>
 </div>
 <div class="form-group">
     <div class="col-md-offset-2 col-md-10">
-        <input type="submit" class="btn btn-default" value="Search Artist" onclick="location.href='@Url.Action("SearchResult","ArtistSearch")'"/>
+        <input type="submit" class="btn btn-default" value="Search Artist" onclick="post()" />
     </div>
 </div>
+<script>
+
+   function post() {
+        var Search = $("#searchInput").val();
+        $.ajax({
+            type: "GET",
+            url: "SearchResult",
+            coontentType: "application/json",
+            data: {
+                "Search": Search
+            },
+            dataType: "json",
+
+            success: function (data) {
+                console.log(data) 
+            },
+            error: function (req, status, error) {
+                console.log(req);
+            }
+        });
+        return false;
+   };
+    </script>

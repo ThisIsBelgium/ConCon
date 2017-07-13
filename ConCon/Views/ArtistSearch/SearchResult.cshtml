@@ -1,4 +1,4 @@
-﻿
+﻿@model IEnumerable<ConCon.Models.PerformerViewModel>
 @{
     ViewBag.Title = "Search";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -7,5 +7,34 @@
 <h2>SearchResult</h2>
 
 <div>
-    
+    <table>  
+
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.image)
+            </th>
+        <th>
+            @Html.DisplayNameFor(model => model.name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.genres)
+        </th>
+
+</tr>
+@foreach (ConCon.Models.PerformerViewModel performer in Model)
+{
+    <tr>
+        <th>
+          <img src="@Html.DisplayFor(modelItem => performer.image)" alt="No Image"/>
+        </th>
+        <th>
+            @Html.DisplayFor(modelItem => performer.name)
+        </th>
+        <th>
+            @Html.Display(performer.genres?[0]?.name ?? "N/A")
+        </th>
+    </tr>
+}
+
+</table>
 </div>

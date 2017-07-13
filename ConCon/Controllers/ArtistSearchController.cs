@@ -17,12 +17,13 @@ namespace ConCon.Controllers
         {
             return View();
         }
+        //GET: Search
       public ActionResult Search()
         {
             return View();
         }
-
-        public ActionResult SearchResult(ArtistSearchViewModel model, PerformerViewModel performer)
+        
+        public ActionResult SearchResult(ArtistSearchViewModel model)
         {
             model.Search = "Tool";
             List<PerformerViewModel> ResultList = new List<PerformerViewModel>();
@@ -39,15 +40,21 @@ namespace ConCon.Controllers
                     ArtistSearchRootObjectViewModel PerformerList = JsonConvert.DeserializeObject<ArtistSearchRootObjectViewModel>(result.Result);
                     foreach (PerformerViewModel perf in PerformerList.performers)
                     {
+                        PerformerViewModel performer = new PerformerViewModel();
                         performer.name = perf.name;
                         performer.id = perf.id;
+                        performer.genres = perf.genres;
+                        performer.score = perf.score;
+                        performer.image = perf.image;
+                        performer.popularity = perf.popularity;
+                        performer.url = perf.url;
 
                         ResultList.Add(performer);
 
                     }
                 }
             }
-            return View("SearchResult","ArtistSearch",ResultList);
+            return View(ResultList);
         }
         public ActionResult SearchSimilar(SearchSimilarViewModel model)
         {
