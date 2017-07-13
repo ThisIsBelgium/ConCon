@@ -342,6 +342,7 @@
     <Content Include="Views\ArtistSearch\SearchResult.cshtml" />
     <Content Include="Views\ArtistSearch\Search.cshtml" />
     <Content Include="Views\Calendar\GoogleAuthenticationView.cshtml" />
+    <Content Include="Views\ArtistSearch\SearchSimilar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

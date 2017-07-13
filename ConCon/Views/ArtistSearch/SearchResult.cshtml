@@ -7,43 +7,50 @@
 <h2>SearchResult</h2>
 
 <div>
-    <table>  
+    <table>
 
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.image)
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.image)
             </th>
-        <th>
-            @Html.DisplayNameFor(model => model.name)
-        </th>
-        <th>
-           <p> Get Tickets </p>
-        </th>
-        <th>
-            <p>Search Tickets</p>
-        </th>
+            <th>
+                @Html.DisplayNameFor(model => model.name)
+            </th>
+            <th>
+                <p> Get Tickets </p>
+            </th>
+            <th>
+                <p>Search Tickets</p>
+            </th>
 
-</tr>
-@foreach (ConCon.Models.PerformerViewModel performer in Model)
-{
-    <tr>
-        <th>
-          <img src="@Html.DisplayFor(modelItem => performer.image)" alt="No Image"/>
-        </th>
-        <th>
-            @Html.DisplayFor(modelItem => performer.name)
-        </th>
-        @*<th>
-            @Html.Display(performer.genres?[0]?.name ?? "N/A")
-        </th>*@
-        <th>
-          <a href="@Html.DisplayFor(modelItem => performer.url)">Check For Tickets</a>
-        </th>
-        <th>
-            @Html.ActionLink("View Similar Artists","SearchSimilar", performer.name)
-        </th>
-    </tr>
-}
+        </tr>
+        @foreach (ConCon.Models.PerformerViewModel performer in Model)
+        {
+            <tr>
+                <th>
+                    @if (performer.image != null)
+                    {
+                        <img src="@Html.DisplayFor(modelItem => performer.image)" alt="No Image" />
+                    }
+                    else
+                    {
+                        <img src="http://4vector.com/i/free-vector-default-profile-picture_099397_Default_Profile_Picture.png" alt="No Image" style="height: 10% ; width: 10%" />
+                    }
+                </th>
+                <th>
+                    @Html.DisplayFor(modelItem => performer.name)
+                </th>
+                @*<th>
+                        @Html.Display(performer.genres?[0]?.name ?? "N/A")
+                    </th>*@
+                <th>
+                    <a href="@Html.DisplayFor(modelItem => performer.url)">Check For Tickets</a>
+                </th>
+                <th>
+                    @Html.ActionLink("View Similar Artists", "SearchSimilar", "ArtistSearch", performer.id)
+                </th>
+            </tr>
+        }
 
-</table>
+    </table>
 </div>
