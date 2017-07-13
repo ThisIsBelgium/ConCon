@@ -22,10 +22,8 @@ namespace ConCon.Controllers
         {
             return View();
         }
-        
         public ActionResult SearchResult(ArtistSearchViewModel model)
         {
-            model.Search = "Tool";
             List<PerformerViewModel> ResultList = new List<PerformerViewModel>();
             using (var client = new HttpClient())
             {

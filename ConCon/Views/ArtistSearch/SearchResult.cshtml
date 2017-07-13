@@ -17,7 +17,10 @@
             @Html.DisplayNameFor(model => model.name)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.genres)
+           <p> Get Tickets </p>
+        </th>
+        <th>
+            <p>Search Tickets</p>
         </th>
 
 </tr>
@@ -30,8 +33,14 @@
         <th>
             @Html.DisplayFor(modelItem => performer.name)
         </th>
-        <th>
+        @*<th>
             @Html.Display(performer.genres?[0]?.name ?? "N/A")
+        </th>*@
+        <th>
+          <a href="@Html.DisplayFor(modelItem => performer.url)">Check For Tickets</a>
+        </th>
+        <th>
+            @Html.ActionLink("View Similar Artists","SearchSimilar", performer.name)
         </th>
     </tr>
 }
