@@ -8,7 +8,7 @@ namespace ConCon.Models
     public class MapViewModel
     {
         public ApplicationUser user { get; set; }
-        public List<Event> events { get; set; }
+        public List<EventViewModel> events { get; set; }
     }
     public class Meta
     {
@@ -118,7 +118,7 @@ namespace ConCon.Models
         public double? highest_price { get; set; }
     }
 
-    public class Event
+    public class EventViewModel
     {
         public string datetime_utc { get; set; }
         public Venue venue { get; set; }

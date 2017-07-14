@@ -19,8 +19,7 @@ namespace ConCon.Controllers
         {
             MapViewModel model = new MapViewModel();
             List<string> artists = ArtistSplit(artistNames);
-            model.events = EventApiCall(artists);
-            return View(model);
+            return View(EventApiCall(artists));
         }
         private List<string> ArtistSplit(List<string> artistNames)
         {
@@ -45,9 +44,9 @@ namespace ConCon.Controllers
             }
             return correctedNames;
         }
-        private List<Event> EventApiCall(List<string> artists)
+        private List<EventViewModel> EventApiCall(List<string> artists)
         {
-            List<Event> events = new List<Event>();
+            List<EventViewModel> events = new List<EventViewModel>();
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri("https://api.seatgeek.com/2/");
@@ -61,18 +60,18 @@ namespace ConCon.Controllers
                     {
                         var jsonString = response.Content.ReadAsStringAsync();
                         var result = JsonConvert.DeserializeObject<MapViewRootObject>(jsonString.Result);
-                        foreach(Event select in result.events)
+                        foreach(var selected in result.events)
                         {
-                            Event data = new Event();
-                            data.performers = select.performers;
-                            data.title = select.title;
-                            data.venue.name = select.venue.name;
-                            data.venue.location.lat = select.venue.location.lat;
-                            data.venue.location.lon = select.venue.location.lon;
-                            data.datetime_local = select.datetime_local;
-                            data.venue.address = select.venue.address;
-                            data.venue.city = select.venue.city;
-                            data.venue.country = select.venue.country;
+                            EventViewModel data = new EventViewModel();
+                            data.performers = selected.performers;
+                            data.title = selected.title;
+                            data.venue.name = selected.venue.name;
+                            data.venue.location.lat = selected.venue.location.lat;
+                            data.venue.location.lon = selected.venue.location.lon;
+                            data.datetime_local = selected.datetime_local;
+                            data.venue.address = selected.venue.address;
+                            data.venue.city = selected.venue.city;
+                            data.venue.country = selected.venue.country;
                             events.Add(data);
                         }
                        
