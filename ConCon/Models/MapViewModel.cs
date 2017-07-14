@@ -8,7 +8,8 @@ namespace ConCon.Models
     public class MapViewModel
     {
         public ApplicationUser user { get; set; }
-        public List<Event> events;
+        public List<Event> events { get; set; }
+        public List<SimilarPerformerViewModel> performers { get; set; }
     }
     public class Meta
     {
