@@ -18,11 +18,6 @@ namespace ConCon.Controllers
         // GET: Map
         public ActionResult MapView()
         {
-<<<<<<< HEAD
-            artistNames.Add("Nine Inch Nails");
-=======
-            artistNames.Add("korn");
->>>>>>> 85a18744235ddcab87f0cd4f92a5f43e762aa157
             MapViewModel model = new MapViewModel();
             List<string> artists = ArtistSplit(artistNames);
             return View(EventApiCall(artists));
