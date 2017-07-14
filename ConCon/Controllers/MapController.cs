@@ -7,6 +7,7 @@ using System.Net.Http;
 using System.Web;
 using Newtonsoft.Json;
 using System.Web.Mvc;
+using Newtonsoft.Json;
 
 namespace ConCon.Controllers
 {
@@ -14,11 +15,11 @@ namespace ConCon.Controllers
     {
         List<string> artistNames = new List<string>();
         // GET: Map
-        public ActionResult MapView(MapViewModel model)
+        public ActionResult MapView()
         {
-            artistNames.Add("korn");
+            MapViewModel model = new MapViewModel();
             List<string> artists = ArtistSplit(artistNames);
-            model.events = EventApiCall(model, artists);
+            model.events = EventApiCall(artists);
             return View(model);
         }
         private List<string> ArtistSplit(List<string> artistNames)
@@ -44,7 +45,7 @@ namespace ConCon.Controllers
             }
             return correctedNames;
         }
-        private List<Event> EventApiCall(MapViewModel model, List<string> artists)
+        private List<Event> EventApiCall(List<string> artists)
         {
             List<Event> events = new List<Event>();
             using (var client = new HttpClient())
@@ -59,11 +60,22 @@ namespace ConCon.Controllers
                     if (response.IsSuccessStatusCode)
                     {
                         var jsonString = response.Content.ReadAsStringAsync();
-                        MapViewRootObject rootObject = JsonConvert.DeserializeObject<MapViewRootObject>(jsonString.Result);
-                        foreach (Event select in rootObject.events)
+                        var result = JsonConvert.DeserializeObject<MapViewRootObject>(jsonString.Result);
+                        foreach(Event select in result.events)
                         {
-                            events.Add(select);
+                            Event data = new Event();
+                            data.performers = select.performers;
+                            data.title = select.title;
+                            data.venue.name = select.venue.name;
+                            data.venue.location.lat = select.venue.location.lat;
+                            data.venue.location.lon = select.venue.location.lon;
+                            data.datetime_local = select.datetime_local;
+                            data.venue.address = select.venue.address;
+                            data.venue.city = select.venue.city;
+                            data.venue.country = select.venue.country;
+                            events.Add(data);
                         }
+                       
                     }                    
                 }
             }
