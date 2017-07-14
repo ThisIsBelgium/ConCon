@@ -75,7 +75,7 @@ namespace ConCon.Controllers
                             performer.name = rec.performer.name;
                             performer.id = rec.performer.id;
                             performer.genres = rec.performer.genres;
-                            performer.score = rec.performer.score; 
+                            performer.score = Math.Round(rec.performer.score*100,2); 
                             performer.image = rec.performer.image;
                             performer.url = rec.performer.url;
 
