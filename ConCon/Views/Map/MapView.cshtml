@@ -14,8 +14,10 @@
 <script type="text/javascript">
     
     //Create map and info windows
-    function myMap() {
-        
+    function generateMap() {
+
+        var myVar = "<%= events %>";
+
         var eventInfo = '<div id="content">' +
             '<div id="siteNotice">' +
             '</div>' +
@@ -52,11 +54,11 @@
             {
                 <text>
                 var infowindow = new google.maps.InfoWindow({
-            content:
-            eventInfo
+                    content:
+                    eventInfo
                 });
-        </text>
-        }
+                </text>
+            }
         //User current location
 
         marker.setMap(map);
