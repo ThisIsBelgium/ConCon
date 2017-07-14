@@ -7,19 +7,25 @@ using System.Net.Http;
 using System.Web;
 using Newtonsoft.Json;
 using System.Web.Mvc;
+using Newtonsoft.Json;
 
 namespace ConCon.Controllers
 {
     public class MapController : Controller
     {
         List<string> artistNames = new List<string>();
+       
         // GET: Map
-        public ActionResult MapView(MapViewModel model)
+        public ActionResult MapView()
         {
+<<<<<<< HEAD
+            artistNames.Add("Nine Inch Nails");
+=======
             artistNames.Add("korn");
+>>>>>>> 85a18744235ddcab87f0cd4f92a5f43e762aa157
+            MapViewModel model = new MapViewModel();
             List<string> artists = ArtistSplit(artistNames);
-            model.events = EventApiCall(model, artists);
-            return View(model);
+            return View(EventApiCall(artists));
         }
         private List<string> ArtistSplit(List<string> artistNames)
         {
@@ -44,9 +50,9 @@ namespace ConCon.Controllers
             }
             return correctedNames;
         }
-        private List<Event> EventApiCall(MapViewModel model, List<string> artists)
+        private List<EventViewModel> EventApiCall(List<string> artists)
         {
-            List<Event> events = new List<Event>();
+            List<EventViewModel> events = new List<EventViewModel>();
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri("https://api.seatgeek.com/2/");
@@ -59,10 +65,14 @@ namespace ConCon.Controllers
                     if (response.IsSuccessStatusCode)
                     {
                         var jsonString = response.Content.ReadAsStringAsync();
-                        MapViewRootObject rootObject = JsonConvert.DeserializeObject<MapViewRootObject>(jsonString.Result);
-                        foreach (Event select in rootObject.events)
+                        var result = JsonConvert.DeserializeObject<MapViewRootObject>(jsonString.Result);
+                        foreach(var selected in result.events)
                         {
-                            events.Add(select);
+                            EventViewModel data = new EventViewModel();
+                            data.performers = selected.performers;
+                            data.title = selected.title;
+                            data.venue = selected.venue;
+                            events.Add(data);
                         }
                     }                    
                 }

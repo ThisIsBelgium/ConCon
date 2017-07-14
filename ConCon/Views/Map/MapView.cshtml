@@ -1,33 +1,45 @@
-﻿@{
+﻿@model IEnumerable<ConCon.Models.EventViewModel>
+
+@{
     ViewBag.Title = "MapView";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>Google Maps View of Events</h2>
-<h4>Click points for more infomation</h4>
 
 
 
-<div id="map" style="width:100%;height:450px"></div>
-<script>
-    //Create map and info windows
-    function myMap() {
-        var eventInfo = '<div id="content">' +
-            '<div id="siteNotice">' +
-            '</div>' +
-            '<h1 id="firstHeading" class="firstHeading">Event Information</h1>' +
-            '<div id="bodyContent">' +
-            '<p>Artist Name: </p>' +
-            '<p>Event Address: </p>' +
-            '<p>Venue Name: </p>' +
-            '<p><a href="http://www.ticketmaster.com">Buy Tickets</a></p> ' +
-            '</div>' +
-            '</div>';
-        var mapCanvas = document.getElementById("map");
-        var myCenter = new google.maps.LatLng(43.0341340, -87.911953087);
-        var mapOptions = { center: myCenter, zoom: 10 };
-        var map = new google.maps.Map(mapCanvas, mapOptions);
 
+
+@if (Model.Count() != 0)
+{
+    <h4>Click points for more infomation</h4>
+    <div id="map" style="width:100%;height:450px"></div>
+    <script type="text/javascript">
+@foreach (var Event in Model)
+{
+            <text>
+            //Create map and info windows
+            function generateMap() {
+
+                var mapCanvas = document.getElementById("map");
+                var myCenter = new google.maps.LatLng(43.0341340, -87.911953087);
+                var mapOptions = { center: myCenter, zoom: 10 };
+                var map = new google.maps.Map(mapCanvas, mapOptions);
+                var eventInfo = '<div id="content">' +
+                    '<div id="siteNotice">' +
+                    '</div>' +
+                    '<h1 id="firstHeading" class="firstHeading">Event Information</h1>' +
+                    '<div id="bodyContent">' +
+                    '<p>Artist Name: @Html.DisplayFor(modelItem => Event.performers)</p>' +
+                    '<p>Event Address: @Html.DisplayFor(modelItem => Event.venue.address)</p>' +
+                    '<p>Venue Name: @Html.DisplayFor(modelItem => Event.venue.name)</p>' +
+                    '<p>Venue Date: @Html.DisplayFor(modelItem => Event.datetime_local)</p>' +
+                    '</div>' +
+                    '</div>';
+               </text>
+}
+        }
         //User Location
         var marker = new google.maps.Marker({
             position: new google.maps.LatLng(43.057665, -87.881014),
@@ -39,24 +51,46 @@
         var eventLat = 43.057665
         var eventLong = -87.881014
         var eventLoc = new google.maps.LatLng(43.057665, -87.881014);
-        var EventMarker = new google.maps.Marker({
-            position: eventLoc           
+    var EventMarker = new google.maps.Marker({
+            position: eventLoc
         });
 
-        var infowindow = new google.maps.InfoWindow({
-            content:
-            eventInfo
-        });
 
-        //User current location
-        marker.setMap(map);
-        google.maps.event.addListener(marker, 'click', function () {
-                infowindow.setContent(eventLoc);
-                infowindow.open(map, marker);
-            });
-        
-    } 
+        @foreach (var item in Model)
+        {
+                <text>
+                var infowindow = new google.maps.InfoWindow({
+                    content:
+                    eventInfo
+                });
+                </text>
+        }
+//User current location
+//marker.setMap(map);
+//            google.maps.event.addListener(marker, 'click', function () {
+//    infowindow.setContent(eventLoc);
+//    infowindow.open(map, marker);
+//});
 
-</script>
-<script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCZwQiJCGkSJzK1K_ZKGIs_e045g3RjELU&callback=myMap"></script>
+
+
+    </script>
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCBoWyD7kP_Xc4sflnZ2w7kYzaHbUlDxok&callback=myMap"></script>
+}
+else
+{
+    <p>There are no upcomming events available for these artists at this time. </p>
+    <div id="googleMap" style="width:100%;height:400px;"></div>
+    <script>
+        function myMap() {
+        var mapProp= {
+            center: new google.maps.LatLng(43.057665, -87.881014),
+            zoom:8,
+        };
+        var map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
+}
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCZwQiJCGkSJzK1K_ZKGIs_e045g3RjELU&callback=myMap"></script>
+}
+
