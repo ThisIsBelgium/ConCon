@@ -9,6 +9,8 @@ namespace ConCon.Models
     {
         public ApplicationUser user { get; set; }
         public List<EventViewModel> events { get; set; }
+        public Venue venue { get; set; }
+        public List<Performer> performers { get; set; }
     }
     public class Meta
     {
@@ -147,6 +149,6 @@ namespace ConCon.Models
     {
         public Meta meta { get; set; }
         public InHand in_hand { get; set; }
-        public List<Event> events { get; set; }
+        public List<EventViewModel> events { get; set; }
     }
 }
