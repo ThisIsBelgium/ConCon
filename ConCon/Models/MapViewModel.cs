@@ -9,10 +9,8 @@ namespace ConCon.Models
     {
         public ApplicationUser user { get; set; }
 
-        public List<SimilarPerformerViewModel> performers { get; set; }
-
         public List<EventViewModel> events { get; set; }
-        
+
     }
     public class Meta
     {
