@@ -56,6 +56,7 @@ namespace ConCon.Controllers
         }
         public async Task<ActionResult> SearchSimilar(int id)
         {
+           
             List<SimilarPerformerViewModel> ResultList = new List<SimilarPerformerViewModel>();
             using (var client = new HttpClient())
             {
@@ -77,7 +78,7 @@ namespace ConCon.Controllers
                             performer.score = Math.Round(rec.performer.score*100,2); 
                             performer.image = rec.performer.image;
                             performer.url = rec.performer.url;
-
+                            performer.OrigId = id;
                             ResultList.Add(performer);
 
                         }

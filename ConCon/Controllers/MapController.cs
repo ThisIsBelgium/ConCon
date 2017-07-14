@@ -13,21 +13,18 @@ namespace ConCon.Controllers
 {
     public class MapController : Controller
     {
-
-        List<string> artistNames = new List<string>();
-       
-
         // GET: Map
-        public ActionResult MapView(int ID)
+        
+        public ActionResult MapView(int id)
         {
-            List<SimilarPerformerViewModel> performers = SearchSimilar(ID);
-            List<string> artistName = new List<string>();
-            foreach(SimilarPerformerViewModel performer in performers)
+            var artists = SearchSimilar(id);
+            List<string> artistNames = new List<string>();
+            foreach(var artist in artists)
             {
-                artistName.Add(performer.name);
-            }
-            List<string> artists = ArtistSplit(artistNames);
-            return View(EventApiCall(artists));
+                artistNames.Add(artist.name);
+            }    
+            List<string> splitArtists = ArtistSplit(artistNames);
+            return View(EventApiCall(splitArtists));
         }
         private List<string> ArtistSplit(List<string> artistNames)
         {
@@ -68,26 +65,25 @@ namespace ConCon.Controllers
                     {
                         var jsonString = response.Content.ReadAsStringAsync();
                         MapViewRootObject result = JsonConvert.DeserializeObject<MapViewRootObject>(jsonString.Result);
-                        foreach(EventViewModel Event in result.events)
+                        foreach (EventViewModel Event in result.events)
                         {
                             events.Add(Event);
                         }
                     }
-                                        
+
                 }
             }
             return events;
         }
-        private List<SimilarPerformerViewModel> SearchSimilar(int ID)
+        private List<SimilarPerformerViewModel> SearchSimilar(int origId)
         {
-            ID = 1926;
             List<SimilarPerformerViewModel> ResultList = new List<SimilarPerformerViewModel>();
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri("https://api.seatgeek.com/2/");
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-                string url = "https://api.seatgeek.com/2/recommendations/performers?performers.id=" + ID + "&client_id=ODExNjMyNnwxNDk5Nzg0NzQxLjEy";
+                string url = "https://api.seatgeek.com/2/recommendations/performers?performers.id=" + origId + "&client_id=ODExNjMyNnwxNDk5Nzg0NzQxLjEy";
                 var response = client.GetAsync(url).Result;
                 if (response.IsSuccessStatusCode)
                 {
