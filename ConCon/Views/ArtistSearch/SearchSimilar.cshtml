@@ -6,10 +6,7 @@
 
 <h2>Similar Artists</h2>
 
-@using (Html.BeginForm("MapView", "Map"))
-{
-    <input type= "submit" value= "View Artist's Events" class="btn btn-default" />
-    @Html.AntiForgeryToken();
+@Html.ActionLink("View Artist's Upcoming Events", "MapView", "Map", new { id = Model.ToList()[0].OrigId }, new { })
 <div>
     <table>
 
@@ -30,9 +27,6 @@
         </tr>
         @foreach (ConCon.Models.SimilarPerformerViewModel performer in Model.OrderByDescending(performer => performer.score))
         {
-            @Html.Hidden(performer.name.ToString());
-            //ConCon.Models.SimilarPerformerViewModel perf = new ConCon.Models.SimilarPerformerViewModel();
-            //perf.id = performer.id;
             <tr>
                 <th>
                     @if (performer.image != null)
@@ -59,4 +53,3 @@
     </table>
 </div>
 
-}

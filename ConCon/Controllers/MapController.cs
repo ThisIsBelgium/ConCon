@@ -14,22 +14,17 @@ namespace ConCon.Controllers
     public class MapController : Controller
     {
         // GET: Map
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult MapView(int ID)
+        
+        public ActionResult MapView(int id)
         {
-<<<<<<< HEAD
-            MapViewModel model = new MapViewModel();
-=======
-            List<SimilarPerformerViewModel> performers = SearchSimilar(ID);
-            List<string> artistName = new List<string>();
-            foreach (SimilarPerformerViewModel performer in performers)
+            var artists = SearchSimilar(id);
+            List<string> artistNames = new List<string>();
+            foreach(var artist in artists)
             {
-                artistName.Add(performer.name);
-            }
->>>>>>> d719f364d46246e0a50eb8607e5fc05cfee15404
-            List<string> artists = ArtistSplit(artistNames);
-            return View(EventApiCall(artists));
+                artistNames.Add(artist.name);
+            }    
+            List<string> splitArtists = ArtistSplit(artistNames);
+            return View(EventApiCall(splitArtists));
         }
         private List<string> ArtistSplit(List<string> artistNames)
         {
@@ -80,16 +75,15 @@ namespace ConCon.Controllers
             }
             return events;
         }
-        private List<SimilarPerformerViewModel> SearchSimilar(int ID)
+        private List<SimilarPerformerViewModel> SearchSimilar(int origId)
         {
-            ID = 1926;
             List<SimilarPerformerViewModel> ResultList = new List<SimilarPerformerViewModel>();
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri("https://api.seatgeek.com/2/");
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-                string url = "https://api.seatgeek.com/2/recommendations/performers?performers.id=" + ID + "&client_id=ODExNjMyNnwxNDk5Nzg0NzQxLjEy";
+                string url = "https://api.seatgeek.com/2/recommendations/performers?performers.id=" + origId + "&client_id=ODExNjMyNnwxNDk5Nzg0NzQxLjEy";
                 var response = client.GetAsync(url).Result;
                 if (response.IsSuccessStatusCode)
                 {
