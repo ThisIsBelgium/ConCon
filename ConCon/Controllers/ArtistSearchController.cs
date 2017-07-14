@@ -54,16 +54,15 @@ namespace ConCon.Controllers
             }
             return View(ResultList);
         }
-        public async Task<ActionResult> SearchSimilar(SearchSimilarViewModel model)
+        public async Task<ActionResult> SearchSimilar(int id)
         {
-            model.Search = "1926";
             List<SimilarPerformerViewModel> ResultList = new List<SimilarPerformerViewModel>();
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri("https://api.seatgeek.com/2/");
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-                string url = "https://api.seatgeek.com/2/recommendations/performers?performers.id=" + model.Search + "&client_id=ODExNjMyNnwxNDk5Nzg0NzQxLjEy";
+                string url = "https://api.seatgeek.com/2/recommendations/performers?performers.id=" + id + "&client_id=ODExNjMyNnwxNDk5Nzg0NzQxLjEy";
                 var response = client.GetAsync(url).Result;
                 if (response.IsSuccessStatusCode)
                 {
