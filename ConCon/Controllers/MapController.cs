@@ -20,16 +20,12 @@ namespace ConCon.Controllers
         // GET: Map
         public ActionResult MapView(int ID)
         {
-<<<<<<< HEAD
-            MapViewModel model = new MapViewModel();
-=======
             List<SimilarPerformerViewModel> performers = SearchSimilar(ID);
             List<string> artistName = new List<string>();
             foreach(SimilarPerformerViewModel performer in performers)
             {
                 artistName.Add(performer.name);
             }
->>>>>>> d719f364d46246e0a50eb8607e5fc05cfee15404
             List<string> artists = ArtistSplit(artistNames);
             return View(EventApiCall(artists));
         }
