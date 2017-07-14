@@ -7,7 +7,7 @@ using System.Net.Http;
 using System.Web;
 using Newtonsoft.Json;
 using System.Web.Mvc;
-using Newtonsoft.Json;
+
 
 namespace ConCon.Controllers
 {
@@ -18,11 +18,9 @@ namespace ConCon.Controllers
         // GET: Map
         public ActionResult MapView()
         {
-<<<<<<< HEAD
-            artistNames.Add("Nine Inch Nails");
-=======
+
             artistNames.Add("korn");
->>>>>>> 85a18744235ddcab87f0cd4f92a5f43e762aa157
+
             MapViewModel model = new MapViewModel();
             List<string> artists = ArtistSplit(artistNames);
             return View(EventApiCall(artists));
@@ -69,9 +67,7 @@ namespace ConCon.Controllers
                         foreach(var selected in result.events)
                         {
                             EventViewModel data = new EventViewModel();
-                            data.performers = selected.performers;
-                            data.title = selected.title;
-                            data.venue = selected.venue;
+                            data = selected;
                             events.Add(data);
                         }
                     }                    

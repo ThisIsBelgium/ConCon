@@ -1,86 +1,75 @@
-﻿@model IEnumerable<ConCon.Models.EventViewModel>
-
+﻿
+@model IEnumerable < ConCon.Models.EventViewModel >
+@using Newtonsoft.Json   
 @{
     ViewBag.Title = "MapView";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>Google Maps View of Events</h2>
+<h4>Click points for more infomation</h4>
 
+<p id="eventName"></p>
 
-
-
-
-@if (Model.Count() != 0)
-{
-    <h4>Click points for more infomation</h4>
-    <div id="map" style="width:100%;height:450px"></div>
-    <script type="text/javascript">
-@foreach (var Event in Model)
-{
-            <text>
-            //Create map and info windows
-            function generateMap() {
-
-                var mapCanvas = document.getElementById("map");
-                var myCenter = new google.maps.LatLng(43.0341340, -87.911953087);
-                var mapOptions = { center: myCenter, zoom: 10 };
-                var map = new google.maps.Map(mapCanvas, mapOptions);
-                var eventInfo = '<div id="content">' +
-                    '<div id="siteNotice">' +
-                    '</div>' +
-                    '<h1 id="firstHeading" class="firstHeading">Event Information</h1>' +
-                    '<div id="bodyContent">' +
-                    '<p>Artist Name: @Html.DisplayFor(modelItem => Event.performers)</p>' +
-                    '<p>Event Address: @Html.DisplayFor(modelItem => Event.venue.address)</p>' +
-                    '<p>Venue Name: @Html.DisplayFor(modelItem => Event.venue.name)</p>' +
-                    '<p>Venue Date: @Html.DisplayFor(modelItem => Event.datetime_local)</p>' +
-                    '</div>' +
-                    '</div>';
-               </text>
-}
-        }
-        //User Location
-        var marker = new google.maps.Marker({
-            position: new google.maps.LatLng(43.057665, -87.881014),
-            map: map
-        });
-
-        //Event Location
-        //foreach event... run this method
-        var eventLat = 43.057665
-        var eventLong = -87.881014
-        var eventLoc = new google.maps.LatLng(43.057665, -87.881014);
-    var EventMarker = new google.maps.Marker({
-            position: eventLoc
-        });
-
-
-        @foreach (var item in Model)
+<div id="map" style="width:100%; height:450px"></div>
+<script> 
+        //Create map and info windows
+    function myMap() {    
+            
+            var data = @Html.Raw(Json.Encode(Model));   
+        for (var i = 2; i < 5; i++)
         {
-                <text>
-                var infowindow = new google.maps.InfoWindow({
-                    content:
-                    eventInfo
+            var address = data[i].venue.address
+            var name = data[i].title
+            var singer = data[i].performers[i].short_name
+            var venueName = data[i].venue.name
+            var eventInfo = '<div id="content">' +
+                '<div id="siteNotice">' +
+                '</div>' +
+                '<h1 id="firstHeading" class="firstHeading"></h1>' +
+                '<div id="bodyContent">' +
+                '<p venueName>Venue Name: ' + venueName + '</p>' +
+                '<p eventName>Artist Name: ' + singer + '</p>' +
+                '<p>Event Address: ' + address + '</p>' +
+                '<p>Event Name: ' + name + '</p>' +
+                '</div>' +
+                '</div>';        
+            var mapCanvas = document.getElementById("map");
+            var myCenter = new google.maps.LatLng(eventLat, eventLong);
+            var mapOptions = { center: myCenter, zoom: 10 };
+            var map = new google.maps.Map(mapCanvas, mapOptions);
+
+            //Starting Location            
+                var marker = new google.maps.Marker({
+                    position: new google.maps.LatLng(eventLat, eventLong),
+                    map: map
                 });
-                </text>
+            
+            //Event coordinates      
+            var eventLat = data[i].venue.location.lat
+            var eventLong = data[i].venue.location.lon
+            var eventLoc = new google.maps.LatLng(eventLat, eventLong);
         }
-//User current location
-//marker.setMap(map);
-//            google.maps.event.addListener(marker, 'click', function () {
-//    infowindow.setContent(eventLoc);
-//    infowindow.open(map, marker);
-//});
+
+            //Create infowindow
+            var infowindow = new google.maps.InfoWindow({content: eventInfo});
+
+        //Event location         
+                marker.setMap(map);
+                google.maps.event.addListener(marker, 'click', function () {
+                    infowindow.setContent(eventLoc);
+                    infowindow.open(map, marker);
+                });            
+        }
+ 
+</script>
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCZwQiJCGkSJzK1K_ZKGIs_e045g3RjELU&callback=myMap"></script>
 
 
 
-    </script>
-    <script async defer
-            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCBoWyD7kP_Xc4sflnZ2w7kYzaHbUlDxok&callback=myMap"></script>
-}
-else
-{
-    <p>There are no upcomming events available for these artists at this time. </p>
+
+    @*<p>There are no upcomming events available for these artists at this time. </p>
     <div id="googleMap" style="width:100%;height:400px;"></div>
     <script>
         function myMap() {
@@ -89,8 +78,8 @@ else
             zoom:8,
         };
         var map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
-}
+     }
     </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCZwQiJCGkSJzK1K_ZKGIs_e045g3RjELU&callback=myMap"></script>
-}
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCZwQiJCGkSJzK1K_ZKGIs_e045g3RjELU&callback=myMap"></script>*@
+
 
