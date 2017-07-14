@@ -13,16 +13,14 @@ namespace ConCon.Controllers
 {
     public class MapController : Controller
     {
-
-        List<string> artistNames = new List<string>();
-       
-
         // GET: Map
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult MapView(int ID)
         {
             List<SimilarPerformerViewModel> performers = SearchSimilar(ID);
             List<string> artistName = new List<string>();
-            foreach(SimilarPerformerViewModel performer in performers)
+            foreach (SimilarPerformerViewModel performer in performers)
             {
                 artistName.Add(performer.name);
             }
@@ -68,12 +66,12 @@ namespace ConCon.Controllers
                     {
                         var jsonString = response.Content.ReadAsStringAsync();
                         MapViewRootObject result = JsonConvert.DeserializeObject<MapViewRootObject>(jsonString.Result);
-                        foreach(EventViewModel Event in result.events)
+                        foreach (EventViewModel Event in result.events)
                         {
                             events.Add(Event);
                         }
                     }
-                                        
+
                 }
             }
             return events;
