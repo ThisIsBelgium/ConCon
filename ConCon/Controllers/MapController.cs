@@ -14,9 +14,11 @@ namespace ConCon.Controllers
     public class MapController : Controller
     {
         List<string> artistNames = new List<string>();
+       
         // GET: Map
         public ActionResult MapView()
         {
+            artistNames.Add("Nine Inch Nails");
             MapViewModel model = new MapViewModel();
             List<string> artists = ArtistSplit(artistNames);
             return View(EventApiCall(artists));

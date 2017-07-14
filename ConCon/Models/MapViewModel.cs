@@ -147,6 +147,6 @@ namespace ConCon.Models
     {
         public Meta meta { get; set; }
         public InHand in_hand { get; set; }
-        public List<Event> events { get; set; }
+        public List<EventViewModel> events { get; set; }
     }
 }
