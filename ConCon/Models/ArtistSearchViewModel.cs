@@ -11,6 +11,7 @@ namespace ConCon.Models
     }
     public class SearchSimilarViewModel
     {
+      
         public string Search { get; set; }
     }
     public class GenreViewModel
@@ -54,6 +55,7 @@ namespace ConCon.Models
         public int id { get; set; }
         public List<SimilarArtistGenreViewModel> genres { get; set; }
         public int num_upcoming_events { get; set; }
+        public int OrigId { get; set; }
     }
     public class RecommendationViewModel
     {

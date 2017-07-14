@@ -1,8 +1,55 @@
-﻿
+﻿@model IEnumerable<ConCon.Models.SimilarPerformerViewModel>
 @{
     ViewBag.Title = "SearchSimilar";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>SearchSimilar</h2>
+<h2>Similar Artists</h2>
+
+@Html.ActionLink("View Artist's Upcoming Events", "MapView", "Map", new { id = Model.ToList()[0].OrigId }, new { })
+<div>
+    <table>
+
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.image)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.name)
+            </th>
+            <th>
+                <p> % Match </p>
+            </th>
+            <th>
+                <p>Search Tickets</p>
+            </th>
+
+        </tr>
+        @foreach (ConCon.Models.SimilarPerformerViewModel performer in Model.OrderByDescending(performer => performer.score))
+        {
+            <tr>
+                <th>
+                    @if (performer.image != null)
+                    {
+                        <img src="@Html.DisplayFor(modelItem => performer.image)" alt="No Image" />
+                    }
+                    else
+                    {
+                        <img src="http://4vector.com/i/free-vector-default-profile-picture_099397_Default_Profile_Picture.png" alt="No Image" style="height: 10% ; width: 10%" />
+                    }
+                </th>
+                <th>
+                    @Html.DisplayFor(modelItem => performer.name)
+                </th>
+                <th>
+                    @Html.DisplayFor(modelItem => performer.score)% Match
+                </th>
+                <th>
+                    <a href="@Html.DisplayFor(modelItem => performer.url)">Check For Tickets</a>
+                </th>
+            </tr>
+
+        }
+    </table>
+</div>
 
