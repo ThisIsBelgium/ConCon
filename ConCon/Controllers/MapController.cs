@@ -7,36 +7,26 @@ using System.Net.Http;
 using System.Web;
 using Newtonsoft.Json;
 using System.Web.Mvc;
-
+using System.Threading.Tasks;
 
 namespace ConCon.Controllers
 {
     public class MapController : Controller
     {
-<<<<<<< HEAD
-=======
+
         List<string> artistNames = new List<string>();
        
->>>>>>> 05361ce1c63d3964d9e3fd0d08475f547d96b898
+
         // GET: Map
-        public ActionResult MapView(List<SimilarPerformerViewModel> performers)
+        public ActionResult MapView(int ID)
         {
-<<<<<<< HEAD
+            List<SimilarPerformerViewModel> performers = SearchSimilar(ID);
             List<string> artistName = new List<string>();
             foreach(SimilarPerformerViewModel performer in performers)
             {
                 artistName.Add(performer.name);
             }
-            List<string> artists = ArtistSplit(artistName);
-=======
-<<<<<<< HEAD
-            artistNames.Add("Nine Inch Nails");
-=======
-            artistNames.Add("korn");
->>>>>>> 85a18744235ddcab87f0cd4f92a5f43e762aa157
-            MapViewModel model = new MapViewModel();
             List<string> artists = ArtistSplit(artistNames);
->>>>>>> 05361ce1c63d3964d9e3fd0d08475f547d96b898
             return View(EventApiCall(artists));
         }
         private List<string> ArtistSplit(List<string> artistNames)
@@ -77,13 +67,43 @@ namespace ConCon.Controllers
                     if (response.IsSuccessStatusCode)
                     {
                         var jsonString = response.Content.ReadAsStringAsync();
-                        var result = JsonConvert.DeserializeObject<MapViewRootObject>(jsonString.Result);
-                        events = result.events;
+                        MapViewRootObject result = JsonConvert.DeserializeObject<MapViewRootObject>(jsonString.Result);
+                        foreach(EventViewModel Event in result.events)
+                        {
+                            events.Add(Event);
+                        }
                     }
                                         
                 }
             }
             return events;
+        }
+        private List<SimilarPerformerViewModel> SearchSimilar(int ID)
+        {
+            ID = 1926;
+            List<SimilarPerformerViewModel> ResultList = new List<SimilarPerformerViewModel>();
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("https://api.seatgeek.com/2/");
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+                string url = "https://api.seatgeek.com/2/recommendations/performers?performers.id=" + ID + "&client_id=ODExNjMyNnwxNDk5Nzg0NzQxLjEy";
+                var response = client.GetAsync(url).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var result = response.Content.ReadAsStringAsync();
+                    SimilarPerformerRootObjectViewModel PerformerList = JsonConvert.DeserializeObject<SimilarPerformerRootObjectViewModel>(result.Result);
+                    foreach (RecommendationViewModel rec in PerformerList.recommendations)
+                    {
+                        SimilarPerformerViewModel performer = new SimilarPerformerViewModel();
+                        performer = rec.performer;
+                        ResultList.Add(performer);
+
+                    }
+
+                }
+            }
+            return ResultList;
         }
     }
 }
