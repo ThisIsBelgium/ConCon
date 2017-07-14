@@ -18,7 +18,11 @@ namespace ConCon.Controllers
         // GET: Map
         public ActionResult MapView()
         {
+<<<<<<< HEAD
             artistNames.Add("Nine Inch Nails");
+=======
+            artistNames.Add("korn");
+>>>>>>> 85a18744235ddcab87f0cd4f92a5f43e762aa157
             MapViewModel model = new MapViewModel();
             List<string> artists = ArtistSplit(artistNames);
             return View(EventApiCall(artists));
@@ -67,16 +71,9 @@ namespace ConCon.Controllers
                             EventViewModel data = new EventViewModel();
                             data.performers = selected.performers;
                             data.title = selected.title;
-                            data.venue.name = selected.venue.name;
-                            data.venue.location.lat = selected.venue.location.lat;
-                            data.venue.location.lon = selected.venue.location.lon;
-                            data.datetime_local = selected.datetime_local;
-                            data.venue.address = selected.venue.address;
-                            data.venue.city = selected.venue.city;
-                            data.venue.country = selected.venue.country;
+                            data.venue = selected.venue;
                             events.Add(data);
                         }
-                       
                     }                    
                 }
             }
