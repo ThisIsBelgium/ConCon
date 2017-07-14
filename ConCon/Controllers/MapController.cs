@@ -7,19 +7,21 @@ using System.Net.Http;
 using System.Web;
 using Newtonsoft.Json;
 using System.Web.Mvc;
-using Newtonsoft.Json;
+
 
 namespace ConCon.Controllers
 {
     public class MapController : Controller
     {
-        List<string> artistNames = new List<string>();
         // GET: Map
-        public ActionResult MapView()
+        public ActionResult MapView(List<SimilarPerformerViewModel> performers)
         {
-            artistNames.Add("korn");
-            MapViewModel model = new MapViewModel();
-            List<string> artists = ArtistSplit(artistNames);
+            List<string> artistName = new List<string>();
+            foreach(SimilarPerformerViewModel performer in performers)
+            {
+                artistName.Add(performer.name);
+            }
+            List<string> artists = ArtistSplit(artistName);
             return View(EventApiCall(artists));
         }
         private List<string> ArtistSplit(List<string> artistNames)
@@ -61,15 +63,9 @@ namespace ConCon.Controllers
                     {
                         var jsonString = response.Content.ReadAsStringAsync();
                         var result = JsonConvert.DeserializeObject<MapViewRootObject>(jsonString.Result);
-                        foreach(var selected in result.events)
-                        {
-                            EventViewModel data = new EventViewModel();
-                            data.performers = selected.performers;
-                            data.title = selected.title;
-                            data.venue = selected.venue;
-                            events.Add(data);
-                        }
-                    }                    
+                        events = result.events;
+                    }
+                                        
                 }
             }
             return events;
