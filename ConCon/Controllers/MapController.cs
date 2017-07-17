@@ -75,7 +75,7 @@ namespace ConCon.Controllers
                         MapViewRootObject result = JsonConvert.DeserializeObject<MapViewRootObject>(jsonString.Result,settings);
                         foreach (EventViewModel Event in result.events)
                         {
-                            events.Add(Event);
+                                events.Add(Event);
                         }
                     }
 
