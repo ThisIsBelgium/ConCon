@@ -9,21 +9,20 @@ using Newtonsoft.Json;
 using System.Web.Mvc;
 using System.Threading.Tasks;
 
-
 namespace ConCon.Controllers
 {
     public class MapController : Controller
     {
         // GET: Map
-        
+
         public ActionResult MapView(int id)
         {
             var artists = SearchSimilar(id);
             List<string> artistNames = new List<string>();
-            foreach(var artist in artists)
+            foreach (var artist in artists)
             {
                 artistNames.Add(artist.name);
-            }    
+            }
             List<string> splitArtists = ArtistSplit(artistNames);
             return View(EventApiCall(splitArtists));
         }
@@ -78,7 +77,6 @@ namespace ConCon.Controllers
                                 events.Add(Event);
                         }
                     }
-
                 }
             }
             return events;
@@ -102,9 +100,7 @@ namespace ConCon.Controllers
                         SimilarPerformerViewModel performer = new SimilarPerformerViewModel();
                         performer = rec.performer;
                         ResultList.Add(performer);
-
                     }
-
                 }
             }
             return ResultList;

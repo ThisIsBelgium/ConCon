@@ -10,7 +10,10 @@ namespace ConCon.Models
         public ApplicationUser user { get; set; }
 
         public List<EventViewModel> events { get; set; }
+<<<<<<< HEAD
         public List<Performer> performers { get; set; }
+=======
+>>>>>>> 828eb1b30a7d5a81168f5ac3f4151ee916ad88c4
 
     }
     public class Meta
