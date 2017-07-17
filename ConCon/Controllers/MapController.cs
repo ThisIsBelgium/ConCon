@@ -8,6 +8,11 @@ using System.Web;
 using Newtonsoft.Json;
 using System.Web.Mvc;
 using System.Threading.Tasks;
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 5fa6d27af72a171b62e0bae21c7cbf12a0385b95
 namespace ConCon.Controllers
 {
     public class MapController : Controller
@@ -33,7 +38,8 @@ namespace ConCon.Controllers
                 if (artist.Contains(" "))
                 {
                     string correctedName = null;
-                    string[] splitName = artist.Split();
+                    
+                    string[] splitName = artist.ToLower().Split();
                     foreach (string name in splitName)
                     {
                         correctedName += name + "-";
@@ -43,13 +49,19 @@ namespace ConCon.Controllers
                 }
                 else
                 {
-                    correctedNames.Add(artist);
+                    string lowerArtist = artist.ToLower();
+                    correctedNames.Add(lowerArtist);
                 }
             }
             return correctedNames;
         }
         private List<EventViewModel> EventApiCall(List<string> artists)
         {
+            var settings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore,
+                MissingMemberHandling = MissingMemberHandling.Ignore,
+            };
             List<EventViewModel> events = new List<EventViewModel>();
             using (var client = new HttpClient())
             {
@@ -58,12 +70,12 @@ namespace ConCon.Controllers
                 client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
                 foreach (string artist in artists)
                 {
-                    string url = "events?performers.slug=" + artist + "&client_id=ODExNjMyNnwxNDk5Nzg0NzQxLjEy";
+                    string url = "https://api.seatgeek.com/2/events?performers.slug=" + artist + "&client_id=ODExNjMyNnwxNDk5Nzg0NzQxLjEy";
                     HttpResponseMessage response = client.GetAsync(url).Result;
                     if (response.IsSuccessStatusCode)
                     {
                         var jsonString = response.Content.ReadAsStringAsync();
-                        MapViewRootObject result = JsonConvert.DeserializeObject<MapViewRootObject>(jsonString.Result);
+                        MapViewRootObject result = JsonConvert.DeserializeObject<MapViewRootObject>(jsonString.Result,settings);
                         foreach (EventViewModel Event in result.events)
                         {
                             events.Add(Event);
