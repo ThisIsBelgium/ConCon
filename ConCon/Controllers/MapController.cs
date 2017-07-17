@@ -8,11 +8,7 @@ using System.Web;
 using Newtonsoft.Json;
 using System.Web.Mvc;
 using System.Threading.Tasks;
-<<<<<<< HEAD
-=======
 
-
->>>>>>> 5fa6d27af72a171b62e0bae21c7cbf12a0385b95
 namespace ConCon.Controllers
 {
     public class MapController : Controller
