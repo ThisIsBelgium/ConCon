@@ -18,10 +18,11 @@
 
 
 <body>
-    <div id="map" style="width: 500px; height: 400px;"></div>
     <h2>Google Maps View of Events</h2>
     <h4>Click points for more infomation</h4>
-    <p>@Html.ActionLink("Go to Google Calendar", "GoogleAuthenticationView", "Calendar")</p>
+    <div id="map" style="width: 800px; height: 430px; display: block; margin: 0 auto"></div>
+  <br />
+    <p>@Html.ActionLink("Go to Google Calendar", "GoogleAuthenticationView", "Calendar", new { }, new { @class = "Search" })</p>
     <script type="text/javascript">
         var data = @Html.Raw(Json.Encode(Model));
         console.log(data);
