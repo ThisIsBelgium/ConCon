@@ -7,37 +7,23 @@ using System.Net.Http;
 using System.Web;
 using Newtonsoft.Json;
 using System.Web.Mvc;
-<<<<<<< HEAD
-
-=======
 using System.Threading.Tasks;
->>>>>>> d316a838962124113e9d7b71c3a363becc825d96
-
 namespace ConCon.Controllers
 {
     public class MapController : Controller
     {
         // GET: Map
-        
+
         public ActionResult MapView(int id)
         {
-<<<<<<< HEAD
-
-            artistNames.Add("korn");
-
-            MapViewModel model = new MapViewModel();
-            List<string> artists = ArtistSplit(artistNames);
-            return View(EventApiCall(artists));
-=======
             var artists = SearchSimilar(id);
             List<string> artistNames = new List<string>();
-            foreach(var artist in artists)
+            foreach (var artist in artists)
             {
                 artistNames.Add(artist.name);
-            }    
+            }
             List<string> splitArtists = ArtistSplit(artistNames);
             return View(EventApiCall(splitArtists));
->>>>>>> d316a838962124113e9d7b71c3a363becc825d96
         }
         private List<string> ArtistSplit(List<string> artistNames)
         {
@@ -80,16 +66,9 @@ namespace ConCon.Controllers
                         MapViewRootObject result = JsonConvert.DeserializeObject<MapViewRootObject>(jsonString.Result);
                         foreach (EventViewModel Event in result.events)
                         {
-<<<<<<< HEAD
-                            EventViewModel data = new EventViewModel();
-                            data = selected;
-                            events.Add(data);
-=======
                             events.Add(Event);
->>>>>>> d316a838962124113e9d7b71c3a363becc825d96
                         }
                     }
-
                 }
             }
             return events;
@@ -113,9 +92,7 @@ namespace ConCon.Controllers
                         SimilarPerformerViewModel performer = new SimilarPerformerViewModel();
                         performer = rec.performer;
                         ResultList.Add(performer);
-
                     }
-
                 }
             }
             return ResultList;
