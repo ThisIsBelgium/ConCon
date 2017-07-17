@@ -1,7 +1,10 @@
 ﻿@{
     ViewBag.Title = "About";
 }
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
-
-<p>Use this area to provide additional information.</p>
+<h1>@ViewBag.Title Con-Con</h1>
+<h3>Find artists that complment your musical tastes</h3>
+<body>
+    <img class="about" src= "https://media.timeout.com/images/101206597/image.jpg" width = "700" height = "500" />
+    <p>Welcome to Con-Con, your concert concierge. When looking for new music, it can sometimes be difficult to find the right place to start. Even if you do find the right artist or group of artists, its not always easy to find where these artists are going to be playing next. With Con-Con, it's easy to find similar artist to your favorites and their upcoming events, you can search for tickets for your favorite artists or their similar counterpart. you can buy those tickets and add the event to your calendar to keep tract of your shows. You can try it below.</p>
+    @Html.ActionLink("Begin Your Search Here", "Search","ArtistSearch", new { }, new { @class = "Search" })
+</body>

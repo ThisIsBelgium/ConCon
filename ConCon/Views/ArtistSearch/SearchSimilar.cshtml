@@ -5,26 +5,22 @@
 }
 
 <h2>Similar Artists</h2>
-
-@Html.ActionLink("View Artist's Upcoming Events", "MapView", "Map", new { id = Model.ToList()[0].OrigId }, new { })
+<br />
+<p>Here is a list of similar artists that match your search: </p>
+<br />
+@try
+{
+    @Html.ActionLink("View Artist's Upcoming Events", "MapView", "Map", new { id = Model.ToList()[0].OrigId }, new {@class ="Search"})
+}
+catch
+{
+    <p>Sorry, there are no similar artists to your selected search.</p>
+    @Html.ActionLink("Go Back", "Search", "ArtistSearch")
+    <img class ="shrug "src="https://i.ytimg.com/vi/lFjWA5w74nY/maxresdefault.jpg" width="700" />
+}
+<br />
 <div>
     <table>
-
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.image)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.name)
-            </th>
-            <th>
-                <p> % Match </p>
-            </th>
-            <th>
-                <p>Search Tickets</p>
-            </th>
-
-        </tr>
         @foreach (ConCon.Models.SimilarPerformerViewModel performer in Model.OrderByDescending(performer => performer.score))
         {
             <tr>

@@ -15,7 +15,41 @@
 .dl-horizontal dt {
     white-space: normal;
 }
-
+p{
+    font-size : 20px;
+}
+.about{
+     display: block;
+    margin: 0 auto;
+}
+.shrug {
+     display: block;
+    margin: 0 auto;
+    width:60%;
+    height:auto;
+}
+.Search{
+    border:thick;
+    background-color: #DB0C0C;
+    padding:15px;
+    color:white;
+    border-radius: 7px;
+    margin : 0 auto;
+    display : block;
+    text-align:center;
+}
+br{
+    padding-top : 20px;
+}
+h1{
+    font-size:50px !important;
+}
+.banner {
+    width : 100%;
+    height : auto;
+     display: block;
+    margin: 0 auto;
+}
 /* Set width on the form input elements since they're 100% wide by default */
 input,
 select,

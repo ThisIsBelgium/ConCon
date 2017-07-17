@@ -7,23 +7,9 @@
 <h2>Search Result</h2>
 
 <div>
+    <p>Here is a list of the list of Artists that match the name you searched for. Select one with the "Search For Similar Artists" below to see a selection of like acts:</p>
+    <br />
     <table>
-
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.image)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.name)
-            </th>
-            <th>
-                <p> Get Tickets </p>
-            </th>
-            <th>
-                <p>Search Tickets</p>
-            </th>
-
-        </tr>
         @foreach (ConCon.Models.PerformerViewModel performer in Model)
         {
             <tr>
@@ -47,7 +33,7 @@
                     <a href="@Html.DisplayFor(modelItem => performer.url)">Check For Tickets</a>
                 </th>
                 <th>
-                    @Html.ActionLink("SEARCH", "SearchSimilar", "ArtistSearch", new {id = performer.id }, new { })
+                    @Html.ActionLink("Search For Similar Artists", "SearchSimilar", "ArtistSearch", new {id = performer.id }, new { })
                 </th>
             </tr>
         }

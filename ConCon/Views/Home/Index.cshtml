@@ -2,8 +2,10 @@
     ViewBag.Title = "Home Page";
 }
 
-<div class="jumbotron">
+<div >
     <h1>WELCOME TO CON-CON</h1>
-    <p class="lead">Con-Con is your blah blah blah</p>
-    <p>@Html.ActionLink("Search for Bands Here","Search","ArtistSearch")</p>
+    <p class="lead">Con-Con is your Concert Concierge</p>
+    <img class="banner" src="http://itallstartswiththemusic.com/wp-content/uploads/2014/03/TAC-website-banner-photo.jpg" />
+    <br />
+    <p>@Html.ActionLink("Search for Bands Here","Search","ArtistSearch", new { }, new { @class = "Search" })</p>
 </div>
